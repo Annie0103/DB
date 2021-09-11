@@ -1,0 +1,75 @@
+<html>
+<head>   
+	<title>新增商品系統</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body bgcolor="#000000">
+<body>
+	<font color="FFCCCC">
+	<font face="微軟正黑體">
+	<h1 align="center">新增商品資料</h1>
+	<form action="create_good.php" method="post">	
+	  <table width="500" border="1" bgcolor="#FFB7DD" align="center" style="border:4px #C10066 solid;">
+		<tr>
+		  
+		  <th>商品名稱</th>
+		  <td bgcolor="#FFCCCC"><input type="text" name="good_name"style="width:400px"  /></td>
+		</tr>
+		
+		<tr>
+		  <th>單價</th>
+		  <td bgcolor="#FFCCCC"><input type="text" name="price"style="width:400px" /></td>
+		</tr>
+		
+		<tr>
+		  <th>庫存</th>
+		  <td bgcolor="#FFCCCC"><input type="text" name="quantity" style="width:400px" /></td>
+		</tr>
+		<tr>
+		  <th>供應商</th>
+		  <td bgcolor="#FFCCCC"><input type="text" name="Provider" style="width:400px" /></td>
+		</tr>
+		
+		<tr>
+		  <th>製造日期</th>
+		  <td bgcolor="#FFCCCC"><input type="text" name="Produce_date"  style="width:400px"/></td>
+		</tr>
+		
+		<tr>
+		  <th>生產地</th>
+		  <td bgcolor="#FFCCCC"><input type="text" name="Made_in" style="width:400px" /></td>
+		</tr>
+		
+		<tr>
+		  <th>類型</th>
+		  <td bgcolor="#FFCCCC"><input  type="radio" name="good_kind_ID" value="1">
+			CLOTH
+			<input  type="radio" name="good_kind_ID" value="2" >
+			FOOD
+			<input  type="radio" name="good_kind_ID" value="3" >
+			DAILY_USED
+			<input  type="radio" name="good_kind_ID" value="4" >
+			3C
+			<input  type="radio" name="good_kind_ID" value="5" >
+			BOOK</td>
+		</tr>
+		<tr>
+		  <th width='80'>產品介紹</th><td bgcolor="#FFCCCC">
+		  <textarea style="width:400px; height:80px" name="Introduce"></textarea></td>
+        </tr>
+
+		<tr>
+		  <th>商品圖片</th>
+		   <td bgcolor="#FFCCCC"><input type="file" accept="image/*" name="good_picture"  /></td>
+		</tr>
+		<tr>
+		  
+		  <th colspan="2"><input type="submit" value="新增"/></th>
+		  
+		</tr>
+	  </table>
+	</form>
+		  <h6 align='center'><a href='seller_index.php' target='_self' style='text-decoration:none;color:palevioletred'>返回賣場</a></h6>
+</body>
+	
+</html>

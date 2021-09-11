@@ -1,0 +1,96 @@
+<html>
+
+<?php  
+$servername = "140.122.184.132";
+                $username = "team12";
+				$password = "DBk49V66ckl9izf";
+				$dbname = "team12";
+
+
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if (!$conn->set_charset("utf8")) {
+    printf("Error loading character set utf8: %s\n", $conn->error);
+    exit();
+}
+
+if ($conn->connect_error){
+    die("Connection failed: " . $conn->connect_error);
+	echo "<h2 align='center'><font color='antiquewith'> 資料不全</font></h2>";	
+} 
+
+if (!empty($_SESSION['user'])&&!empty($_SESSION['member_type'])) {
+	$sell=$_SESSION['user'];
+	$type=$_SESSION['member_type'];
+	
+	$sql = "select * from good where seller_ID='$sell'";
+	
+	$result=mysqli_query($conn,$sql);
+	
+	if(!$result){
+        echo "Error:".mysqli_error($conn);
+        exit();
+    }
+
+    $row=mysqli_num_rows($result);
+	if($row==0){
+	    echo "<h1 align='center'><font size='6' color='#C10066'>目前沒有商品，趕快加入吧~<br><br><br><br><br>";
+		
+	}
+	
+	else{
+		
+?>
+		
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<body bgcolor="#FFE4E1"><form action="information_doedit.php" method="post" >	
+	    <table width="100%" border="1" bgcolor="#FFB7DD" align="center" style="border:4px #C10066 solid" >
+        
+		<tr>
+		  
+		  <th><font face="Comic Sans MS">商品名稱/Good Name</font></th> 
+		  <th><font face="Comic Sans MS">價格/Price</th>
+		  <th><font face="Comic Sans MS">類別/Kind</th> 
+		  <th><font face="Comic Sans MS">庫存/Quantity</th>
+		  <th><font face="Comic Sans MS">製造商/Manufactory</th> 
+		  <th><font face="Comic Sans MS">製造日期/Produce Date</th>
+		  <th><font face="Comic Sans MS">生產地/Made In</th> 
+		  <th><font face="Comic Sans MS">商品介紹/Introduce</th>
+		  <th><font face="Comic Sans MS">上架日期/Launch Date</th>
+		  <th><font face="Comic Sans MS">修改日期/Modified Date</th>
+	
+		</tr>
+		<?php  
+		for($i=0;$i<$row;$i++){
+		  $data=mysqli_fetch_row($result);
+		  $kind="select kind_name from category where kind_ID='$data[4]'";
+		  $kind_result=mysqli_query($conn,$kind);
+		  $kind_get=mysqli_fetch_row($kind_result);
+		
+		?>
+		
+		<tr>
+		  <td bgcolor="#FFCCCC"  align="center"><font face="Comic Sans MS"><?php echo $data[2] ?></td>
+		  <td bgcolor="#FFCCCC"align="center"><font face="Comic Sans MS"> <?php echo $data[3] ?></td>
+		  <td bgcolor="#FFCCCC" align="center"><font face="Comic Sans MS"> <?php echo $kind_get[0] ?></td>
+		  <td bgcolor="#FFCCCC" align="center"><font face="Comic Sans MS"> <?php echo $data[5] ?></td>
+		  <td bgcolor="#FFCCCC" align="center"><font face="Comic Sans MS"> <?php echo $data[7] ?></td>
+		  <td bgcolor="#FFCCCC" align="center"><font face="Comic Sans MS"> <?php echo $data[8] ?></td>
+		  <td bgcolor="#FFCCCC" align="center"><font face="Comic Sans MS"> <?php echo $data[9] ?></td>
+		  <td bgcolor="#FFCCCC" align="center"><font face="Comic Sans MS"> <?php echo $data[10] ?></td>
+		  <td bgcolor="#FFCCCC" align="center"><font face="Comic Sans MS"> <?php echo $data[12] ?></td>
+		  <td bgcolor="#FFCCCC" align="center"><font face="Comic Sans MS"> <?php echo $data[13] ?></td>
+		</tr>
+		
+		<?php 
+		}
+		}
+		}
+		?>
+		
+	  </table>
+	  </form>
+	</body>
+</html>

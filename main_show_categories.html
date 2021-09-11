@@ -1,0 +1,409 @@
+<html>
+<body bgcolor="#FFCCCC">
+<?php
+/*session_start();
+if(!empty($_SESSION['user'])){
+	
+	echo "<h3 align='center'><font color='FFCCCC'> 您已登入</font></h3>";
+	if($_SESSION['member_type']=='seller'){
+	echo "<h6 align='center'><a href='seller_index.php' target='_self' title='回自己的賣場'style='text-decoration:none;color:palevioletred'>回自己的賣場</a></h6>";
+	}
+	else{
+		echo "<h6 align='center'><a href='logout.php' target='_self' title='登出'style='text-decoration:none;color:palevioletred'>登出</a></h6>";
+	}
+}*/
+?>
+
+
+<?php
+				// ******** update your personal settings ******** 
+				$servername = "140.122.184.132";
+                $username = "team12";
+				$password = "DBk49V66ckl9izf";
+				$dbname = "team12";
+
+				// Connect MySQL server
+				$conn = new mysqli($servername, $username, $password, $dbname);
+				
+				// set up char set
+				if (!$conn->set_charset("utf8")) {
+					printf("Error loading character set utf8: %s\n", $conn->error);
+					exit();
+				}
+				
+				// Check connection
+				if ($conn->connect_error) {
+					die("Connection failed: " . $conn->connect_error);
+				} 
+?>
+
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>ALL GOODS</title>
+</head>
+<body>
+<body bgcolor="FF99CC">
+<h1 align="center">ALL GOODS</h1>
+
+<?php
+
+if(isset($_POST['cloth']))
+{
+	
+	$cloth=1;
+	$sql = "SELECT * FROM good where good_kind_ID = '$cloth' and quantity>0";
+	//$sql = "select * from good where good_kind_ID in (select kind_ID distinct form category where $cloth=kind_name)";
+?>
+
+</p>
+
+<table style="border:3px #A42D00 dashed;" cellpadding="10" border='1' align="center">
+<tr>
+<td>商品ID</td>
+<td>賣家</td>
+<td>商品名稱</td>
+<td>價格</td>
+<td>庫存</td>
+
+</tr>
+<?php
+$result = mysqli_query($conn,$sql);   
+ 
+if (!$result) {
+    printf("Error: %s\n", mysqli_error($conn));
+    exit();
+}
+?>
+
+<?php
+
+while($row = mysqli_fetch_array ( $result, MYSQLI_ASSOC )){
+?>
+<tr>
+<td><?php echo $row['good_ID']; ?> </td>        
+<td><?php echo $row['seller_ID'];   ?></td> 
+<td><?php echo $row['good_name']; ?></td>      
+<td><?php echo $row['price'];   ?></td>
+<td><?php echo $row['quantity'];  ?></td>     
+</tr>
+<?php } ?>
+
+</table>
+<h6 align="center">
+<form action="shopping_cart.php" method="post">
+<tr>
+  <th>將商品ID加入購物車:</th>
+  <th><input type="text" name="good_ID"/></th>
+</tr>
+<tr>
+  <th colspan="2"><input type="submit" value="新增"/></th>
+</tr>
+</form>
+
+<form action="add_like_list.php" method="post">
+<tr>
+  <th>將商品ID加入喜愛清單:</th>
+  <th><input type="text" name="good_ID"/></th>
+</tr>
+<tr>
+  <th colspan="2"><input type="submit" value="新增"/></th>
+</tr>
+</form>
+
+<form action="check_post_in_cloth.php" method="post">
+<tr>
+  <th colspan="2"><input type="submit" style="width:200px ; height:50px ; font-size:20px; border:2px blue none; background-color:#FFCCCC; color:palevioletred" value="查看以上商品評論" /></th>
+</tr>
+</form>
+
+</h6>
+
+<?php } 
+
+elseif(isset($_POST['food']))
+{
+	$food=2;
+	$sql = "SELECT * FROM good where good_kind_ID = '$food' and quantity>0";
+	//$sql = "select * from good where good_kind_ID in (select kind_ID distinct form category where $cloth=kind_name)";
+?>
+
+</p>
+
+<table style="border:3px #A42D00 dashed;" cellpadding="10" border='1' align="center">
+<tr>
+<td>商品id</td>
+<td>賣家</td>
+<td>商品名稱</td>
+<td>價格</td>
+<td>庫存</td>
+
+</tr>
+
+<?php 
+$result = mysqli_query($conn,$sql);   
+ 
+if (!$result) {
+    printf("Error: %s\n", mysqli_error($conn));
+    exit();
+}
+?>
+
+<?php while($row = mysqli_fetch_array ( $result, MYSQLI_ASSOC )){  ?>
+<tr>
+<td><?php echo $row['good_ID'];   ?></td>        
+<td><?php echo $row['seller_ID'];   ?></td> 
+<td><?php echo $row['good_name']; ?></td>      
+<td><?php echo $row['price'];   ?></td>
+<td><?php echo $row['quantity'];   ?></td>        
+</tr>
+
+<?php } ?>
+
+</table>
+<h6 align="center">
+<form action="shopping_cart.php" method="post">
+<tr>
+  <th>將商品ID加入購物車:</th>
+  <th><input type="text" name="good_ID"/></th>
+</tr>
+<tr>
+  <th colspan="2"><input type="submit" value="新增"/></th>
+</tr>
+</form>
+
+<form action="add_like_list.php" method="post">
+<tr>
+  <th>將商品ID加入喜愛清單:</th>
+  <th><input type="text" name="good_ID"/></th>
+</tr>
+<tr>
+  <th colspan="2"><input type="submit" value="新增"/></th>
+</tr>
+</form>
+
+<form action="check_post_in_food.php" method="post">
+<tr>
+  <th colspan="2"><input type="submit" style="width:200px ; height:50px ; font-size:20px; border:2px blue none; background-color:#FFCCCC; color:palevioletred" value="查看以上商品評論" /></th>
+</tr>
+</form>
+</h6>
+
+<?php
+}  
+
+elseif(isset($_POST['dailyused']))
+{
+	$dailyused=3;
+	$sql = "SELECT * FROM good where good_kind_ID = '$dailyused' and quantity>0";
+	//$sql = "select * from good where good_kind_ID in (select kind_ID distinct form category where $cloth=kind_name)";
+?>
+
+</p>
+
+<table  border="1" align="center">
+<tr>
+<td>商品id</td>
+<td>賣家</td>
+<td>商品名稱</td>
+<td>價格</td>
+<td>庫存</td>
+
+</tr>
+
+<?php 
+$result = mysqli_query($conn,$sql);   
+ 
+if (!$result) {
+    printf("Error: %s\n", mysqli_error($conn));
+    exit();
+}
+?>
+
+<?php while($row = mysqli_fetch_array ( $result, MYSQLI_ASSOC )){  ?>
+<tr>
+<td><?php echo $row['good_ID'];   ?></td>        
+<td><?php echo $row['seller_ID'];   ?></td> 
+<td><?php echo $row['good_name']; ?></td>      
+<td><?php echo $row['price'];   ?></td>
+<td><?php echo $row['quantity'];   ?></td>        
+</tr>
+
+<?php } ?>
+</table>
+<h6 align="center">
+<form action="shopping_cart.php" method="post">
+<tr>
+  <th>將商品ID加入購物車:</th>
+  <th><input type="text" name="good_ID"/></th>
+</tr>
+<tr>
+  <th colspan="2"><input type="submit" value="新增"/></th>
+</tr>
+</form>
+
+<form action="add_like_list.php" method="post">
+<tr>
+  <th>將商品ID加入喜愛清單:</th>
+  <th><input type="text" name="good_ID"/></th>
+</tr>
+<tr>
+  <th colspan="2"><input type="submit" value="新增"/></th>
+</tr>
+</form>
+<form action="check_post_in_dailyused.php" method="post">
+<tr>
+  <th colspan="2"><input type="submit" style="width:200px ; height:50px ; font-size:20px; border:2px blue none; background-color:#FFCCCC; color:palevioletred" value="查看以上商品評論" /></th>
+</tr>
+</form>
+</h6>
+
+<?php
+} 
+
+elseif(isset($_POST['3c']))
+{
+	$_3c=4;
+	$sql = "SELECT * FROM good where good_kind_ID = '$_3c' and quantity>0";
+	//$sql = "select * from good where good_kind_ID in (select kind_ID distinct form category where $cloth=kind_name)";
+?>
+
+</p>
+
+<table  border="1" align="center">
+<tr>
+<td>商品id</td>
+<td>賣家</td>
+<td>商品名稱</td>
+<td>價格</td>
+<td>庫存</td>
+
+</tr>
+
+<?php 
+$result = mysqli_query($conn,$sql);   
+ 
+if (!$result) {
+    printf("Error: %s\n", mysqli_error($conn));
+    exit();
+}
+?>
+
+<?php while($row = mysqli_fetch_array ( $result, MYSQLI_ASSOC )){  ?>
+<tr>
+<td><?php echo $row['good_ID'];   ?></td>        
+<td><?php echo $row['seller_ID'];   ?></td> 
+<td><?php echo $row['good_name']; ?></td>      
+<td><?php echo $row['price'];   ?></td>
+<td><?php echo $row['quantity'];   ?></td>        
+</tr>
+
+<?php } ?>
+</table>
+<h6 align="center">
+<form action="shopping_cart.php" method="post">
+<tr>
+  <th>將商品ID加入購物車:</th>
+  <th><input type="text" name="good_ID"/></th>
+</tr>
+<tr>
+  <th colspan="2"><input type="submit" value="新增"/></th>
+</tr>
+</form>
+
+<form action="add_like_list.php" method="post">
+<tr>
+  <th>將商品ID加入喜愛清單:</th>
+  <th><input type="text" name="good_ID"/></th>
+</tr>
+<tr>
+  <th colspan="2"><input type="submit" value="新增"/></th>
+</tr>
+</form>
+<form action="check_post_in_3C.php" method="post">
+<tr>
+  <th colspan="2"><input type="submit" style="width:200px ; height:50px ; font-size:20px; border:2px blue none; background-color:#FFCCCC; color:palevioletred" value="查看以上商品評論" /></th>
+</tr>
+</form>
+</h6>
+
+<?php
+} 
+elseif(isset($_POST['book']))
+{
+	$book=5;
+	$sql = "SELECT * FROM good where good_kind_ID = '$book' and quantity>0";
+	//$sql = "select * from good where good_kind_ID in (select kind_ID distinct form category where $cloth=kind_name)";
+?>
+
+</p>
+
+<table  border="1" align="center">
+<tr>
+<td>商品id</td>
+<td>賣家</td>
+<td>商品名稱</td>
+<td>價格</td>
+<td>庫存</td>
+
+</tr>
+
+<?php 
+$result = mysqli_query($conn,$sql);   
+ 
+if (!$result) {
+    printf("Error: %s\n", mysqli_error($conn));
+    exit();
+}
+?>
+
+<?php while($row = mysqli_fetch_array ( $result, MYSQLI_ASSOC )){  ?>
+<tr>
+<td><?php echo $row['good_ID'];   ?></td>        
+<td><?php echo $row['seller_ID'];   ?></td> 
+<td><?php echo $row['good_name']; ?></td>      
+<td><?php echo $row['price'];   ?></td>
+<td><?php echo $row['quantity'];   ?></td>        
+</tr>
+
+<?php } ?>
+</table>
+<h6 align="center">
+<form action="shopping_cart.php" method="post">
+<tr>
+  <th>將商品ID加入購物車:</th>
+  <th><input type="text" name="good_ID"/></th>
+</tr>
+<tr>
+  <th colspan="2"><input type="submit" value="新增"/></th>
+</tr>
+</form>
+
+<form action="add_like_list.php" method="post">
+<tr>
+  <th>將商品ID加入喜愛清單:</th>
+  <th><input type="text" name="good_ID"/></th>
+</tr>
+<tr>
+  <th colspan="2"><input type="submit" value="新增"/></th>
+</tr>
+</form>
+<form action="check_post_in_book.php" method="post">
+<tr>
+  <th colspan="2"><input type="submit" style="width:200px ; height:50px ; font-size:20px; border:2px blue none; background-color:#FFCCCC; color:palevioletred" value="查看以上商品評論" /></th>
+</tr>
+</form>
+
+
+</h6>
+
+<?php
+} ?>
+
+</form>
+</table>
+<h6 align="center"><a href="main.php" target="_self" title="首頁" style="text-decoration:none;color:palevioletred"><font size="3">首頁</font></a></h6>
+
+</body>
+</html>
